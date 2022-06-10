@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -13,7 +17,7 @@ body {
 }
 
 a {
-  color: #9B6E23;
+  color: hsl(var(--p));
   text-decoration: none;
 }
 
