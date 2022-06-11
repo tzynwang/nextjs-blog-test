@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import '../src/styles/global.css';
+import '../styles/global.css';
 
 export default function App({ Component, pageProps }) {
   /* Hooks */
