@@ -7,14 +7,11 @@ import html from 'remark-html';
 const postsDirectory = path.join(process.cwd(), 'src', 'posts');
 
 export function getSortedPostsData() {
-  // Get file names under /posts
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
-    // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '');
-
+  // Get folder names under /posts
+  const folderNames = fs.readdirSync(postsDirectory);
+  const allPostsData = folderNames.map((folderName) => {
     // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
+    const fullPath = path.join(postsDirectory, folderName, 'index.md');
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Use gray-matter to parse the post metadata section
@@ -22,7 +19,7 @@ export function getSortedPostsData() {
 
     // Combine the data with the id
     return {
-      id,
+      id: folderName,
       ...matterResult.data
     };
   });
@@ -39,8 +36,7 @@ export function getSortedPostsData() {
 }
 
 export function getAllPostIds() {
-  const fileNames = fs.readdirSync(postsDirectory);
-
+  const folderNames = fs.readdirSync(postsDirectory);
   // Returns an array that looks like this:
   // [
   //   {
@@ -54,17 +50,17 @@ export function getAllPostIds() {
   //     }
   //   }
   // ]
-  return fileNames.map((fileName) => {
+  return folderNames.map((folderName) => {
     return {
       params: {
-        id: fileName.replace(/\.md$/, '')
+        id: folderName
       }
     };
   });
 }
 
-export async function getPostData(id) {
-  const fullPath = path.join(postsDirectory, `${id}.md`);
+export async function getPostData(folderName) {
+  const fullPath = path.join(postsDirectory, folderName, 'index.md');
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
   // Use gray-matter to parse the post metadata section
@@ -78,7 +74,7 @@ export async function getPostData(id) {
 
   // Combine the data with the id and contentHtml
   return {
-    id,
+    id: folderName,
     contentHtml,
     ...matterResult.data
   };
