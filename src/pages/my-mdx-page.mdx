@@ -1,0 +1,26 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import myImgSrc from './my-mdx-page.jpg';
+
+# My MDX page
+
+This is a list in markdown:
+
+- One
+- Two
+- Three
+
+## Use React component next/image
+
+<Image
+  priority
+  src={myImgSrc}
+  width={400}
+  height={280}
+  objectFit="cover"
+  alt="my-mdx-page"
+/>
+
+## Use React component next/link
+
+<Link href="/">Back to root</Link>
